@@ -1,3 +1,6 @@
+#ifndef _URL_H_
+#define _URL_H_
+
 #include <netdb.h>
 #include <stdio.h> 
 #include <stdlib.h> 
@@ -28,3 +31,5 @@ int getIPAddress(struct url *u);
 char *getFilename(char *path);
 
 int hasUser(char *userPassHost);
+
+#endif
