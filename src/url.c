@@ -1,6 +1,5 @@
 #include "../include/url.h"
 
-
 int parseUrl(char *url, struct url* u){
 	char *_ = strtok(url, "/");
 	char *userPassHost = strtok(NULL, "/");
@@ -69,22 +68,20 @@ int parseUrl(char *url, struct url* u){
     	char * ip = inet_ntoa(*((struct in_addr *)h->h_addr));
     	strcpy(u->ip, ip);
 
-	printf("User %s\n", u->user);
-	printf("Pass %s\n", u->pass);
-	printf("Host %s\n", u->host);
-	printf("Path %s\n", u->path);
-	printf("Filename %s\n", u->filename);
-	printf("Hostname %s\n", u->hostname);
-	printf("IP address %s\n", u->ip);
+	// printf("User %s\n", u->user);
+	// printf("Pass %s\n", u->pass);
+	// printf("Host %s\n", u->host);
+	// printf("Path %s\n", u->path);
+	// printf("Filename %s\n", u->filename);
+	// printf("Hostname %s\n", u->hostname);
+	// printf("IP address %s\n", u->ip);
 
 	return 0;
 }
 
-
 int hasUser(char *userPassHost){
 	return strchr(userPassHost, '@') != NULL ? 1 : 0;
 }
-
 
 char *getFilename(char *path) {
     const char* lastSlash = strrchr(path, '/');
@@ -98,4 +95,3 @@ char *getFilename(char *path) {
 
    return path;
 }
-

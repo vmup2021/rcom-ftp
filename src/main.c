@@ -19,16 +19,28 @@ int main(int argc, char * argv[])
     // Open the socket and check return value
     int fd = openSocket(u.ip, 21);
     int _[1] = {CMD_SOCKET_READY};
-    checkStatusCode(fd, _, 1);
+    char response[4112];
+    checkStatusCode(fd, _, 1, response);
    
-    login(fd, u.user, u.pass);
+    if(login(fd, u.user, u.pass) != 0) {
+        printf("Error in login function");
+        return 1;
+    }
 
-    // Sending the HELP command just to check
-    sendCommand(fd,HELP,0, NULL);
+    // // Sending the HELP command just to check
+    // sendCommand(fd,HELP,0, NULL);
 
-    int c[1] = {CMD_HELP_OK};
+    // int c[1] = {CMD_HELP_OK};
 
-    checkStatusCode(fd, c, 1);
+    // checkStatusCode(fd, c, 1);
+
+    // Enter passive mode
+    if(enterPassiveMode(fd, u.ip, &u.transferPort) != 0) {
+        printf("Error in enterPassiveMode");
+        return 1;
+    }
+
+    printf("Got this from passive mode: %s:%d\n", u.ip, u.transferPort);
 
     return 0;
 }

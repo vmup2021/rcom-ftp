@@ -21,6 +21,7 @@ struct url {
 	char pass[128];
 	char path[256];
 	char filename[128];
+	int transferPort;
 };
 
 

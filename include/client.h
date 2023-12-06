@@ -17,10 +17,12 @@ int openSocket(char *ip, int port);
 
 int login(int socketFd, char *user, char *pass);
 
+int enterPassiveMode(int socketFd, char *ip, int *port);
+
 int sendCommand(int socketFd, char *command, int hasArgs, char *args);
 
-int checkStatusCode(int socketFd, int statusCodesPossible[], int length);
+int checkStatusCode(int socketFd, int *validStatusCodes, int length, char* response);
 
-int readResponse(int socketFd, int *code);
+int readResponse(int socketFd, int *code, char* response);
 
 #endif
