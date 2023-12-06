@@ -23,6 +23,34 @@ int openSocket(char *ip, int port){
 	return socketFd;
 }
 
+
+int login(int socketFd, char *user, char *pass){
+	/* Array to pass status code's to the checkStatusCodes function.
+	 * Has a fixed size of 2, thinking that would be the bigger number 
+	 * of status code that I would check(if wrong, just increase).
+	 * Always control the length of it in the checkStatusCode func*/
+	int temp[2] = {};
+	
+	// Send the USER command and check status code
+	if(sendCommand(socketFd, USER, 1, user) < 0){
+		fprintf(stderr, "Failed to send the USER command.\n");
+		return -1;
+	}
+	temp[0] = CMD_USERNAME_OK;
+	checkStatusCode(socketFd, temp, 1);
+
+	// Send the PASS comm...
+	if(sendCommand(socketFd, PASS, 1, pass) < 0){
+		fprintf(stderr, "Failed to send the PASS command.\n");
+		return -1;
+	}
+	temp[0] = CMD_LOGIN_SUCCESS; 
+	checkStatusCode(socketFd, temp, 1);
+
+	return 0;
+}
+
+
 int sendCommand(int socketFd, char *command, int hasArgs, char *args){
 	char cmd[128];
 
@@ -92,18 +120,17 @@ int checkStatusCode(int socketFd, int statusCodesPossible[], int length){
 
 	int valid = 0;
 	
-	for(int i = 0; i <length; i++){
-		printf("Option: %d\n", statusCodesPossible[i]);
+	for(int i = 0; i <length; i++)
 		if(code == statusCodesPossible[i]) valid = 1;
-	}
+	
 
-	printf("STATUS CODE: %d\n", code);
+	printf("STATUS CODE GOT: %d\n", code);
 
 	if(valid == 0){
 		fprintf(stderr, "Incorrect status code returned!\n");
 		return -1;
 	}
 
-
 	return 0;
 }
+

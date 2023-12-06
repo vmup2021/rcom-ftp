@@ -2,6 +2,9 @@
 #include "../include/client.h"
 #include "../include/constants.h"
 
+// Need to connect to the VPN
+//./my_program ftp://rcom:rcom@netlab1.fe.up.pt/path
+
 int main(int argc, char * argv[])
 {
     if (argc != 2) {
@@ -9,29 +12,16 @@ int main(int argc, char * argv[])
         exit(1);
     }
 
+    // Parse the URL
     struct url u;
     parseUrl(argv[1], &u);
 
-    // Opening the socket and checking the return value
+    // Open the socket and check return value
     int fd = openSocket(u.ip, 21);
-
-    int a[1] = {CMD_SOCKET_READY};
-
-    checkStatusCode(fd, a, 1);
+    int _[1] = {CMD_SOCKET_READY};
+    checkStatusCode(fd, _, 1);
    
-    // Sending the USER command and checking the return value
-    sendCommand(fd, USER, 1, u.user);  
-
-    int valids[1] = {CMD_USERNAME_OK};
-    
-    checkStatusCode(fd, valids, 1);
-
-    // Sending the PASS command and checking the return value
-    sendCommand(fd, PASS, 1, u.pass);
-
-    int b[1] = {CMD_LOGIN_SUCCESS};
-
-    checkStatusCode(fd, b, 1);
+    login(fd, u.user, u.pass);
 
     // Sending the HELP command just to check
     sendCommand(fd,HELP,0, NULL);
