@@ -17,7 +17,12 @@ int main(int argc, char * argv[])
     parseUrl(argv[1], &u);
 
     // Open the socket and check return value
-    int fd = openSocket(u.ip, 21);
+    int fd;
+    // Here port is hardcoded on 21, but wtv
+    if(openSocket(u.ip, 21, &fd) != 0) {
+        printf("Error opening the socket");
+        return 1;
+    }
     int _[1] = {CMD_SOCKET_READY};
     char response[4112];
     checkStatusCode(fd, _, 1, response);

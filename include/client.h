@@ -13,7 +13,7 @@
 
 #include "constants.h"
 
-int openSocket(char *ip, int port);
+int openSocket(char *ip, int port, int *socketFd);
 
 int login(int socketFd, char *user, char *pass);
 

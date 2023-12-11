@@ -1,7 +1,6 @@
 #include "../include/client.h"
 
-int openSocket(char *ip, int port) {
-	int socketFd;
+int openSocket(char *ip, int port, int *socketFd) {
 	struct sockaddr_in serverAddr;
 
 	bzero(&serverAddr, sizeof(serverAddr));
@@ -9,17 +8,17 @@ int openSocket(char *ip, int port) {
 	serverAddr.sin_addr.s_addr = inet_addr(ip);
 	serverAddr.sin_port = htons(port);
 
-	if ((socketFd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+	if ((*socketFd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
 		fprintf(stderr, "Error opening the socket");
 		return -1;
 	}
 
-	if (connect(socketFd, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0) {
+	if (connect(*socketFd, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0) {
 		fprintf(stderr, "Error connecting to the server");
 		return -1;
 	}
 
-	return socketFd;
+	return 0;
 }
 
 int login(int socketFd, char *username, char *password) {
