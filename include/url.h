@@ -14,14 +14,14 @@
 #define h_addr h_addr_list[0] /* for backward compatibility */
 
 struct url {
-	char host[128];
-	char hostname[128];
-	char ip[128];
-	char user[128];
-	char pass[128];
-	char path[256];
-	char filename[128];
-	int transferPort;
+    char host[128];
+    char hostname[128];
+    char ip[128];
+    char user[128];
+    char pass[128];
+    char path[256];
+    char filename[128];
+    int transferPort;
 };
 
 
