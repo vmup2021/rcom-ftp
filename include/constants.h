@@ -21,4 +21,6 @@
 #define CMD_RETR_READY          150         // File is ready to be downloaded
 #define CMD_TRANSFER_COMPLETE   226         // Transfer complete
 #define CMD_HELP_OK 		214         // Help command sucessful
+#define CMD_QUIT_OK 		221         // Quit command sucessful
+
 #endif

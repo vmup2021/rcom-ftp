@@ -17,7 +17,7 @@ int main(int argc, char * argv[])
     parseUrl(argv[1], &u);
 
     // Open the socket and check return value
-    int fd;
+    int fd = 0;
     // Here port is hardcoded on 21, but wtv
     if(openSocket(u.ip, 21, &fd) != 0) {
         printf("Error opening the socket");
@@ -44,8 +44,33 @@ int main(int argc, char * argv[])
         printf("Error in enterPassiveMode");
         return 1;
     }
-
     printf("Got this from passive mode: %s:%d\n", u.ip, u.transferPort);
+
+    int fd_transfer = 0;
+    if(openSocket(u.ip, u.transferPort, &fd_transfer) != 0) {
+        printf("Error opening the socket");
+        return 1;
+    }
+    printf("Opened socket to transfer file\n");
+    
+    printf("Requesting server file %s\n", u.path);
+    if (requestServerFile(fd, u.path) != 0) {
+        printf("Error requesting server resource");
+        return 1;
+    }
+    printf("Requested server file %s\n", u.filename);
+
+    if (transferServerFile(fd, fd_transfer, u.filename) != 0) {
+        printf("Error transfering server resource");
+        return 1;
+    }
+    printf("Transfered server file %s\n", u.filename);
+
+    if (endConnection(fd) != 0) {
+        printf("Error ending connection, still closed the fd tho :)");
+        return 1;
+    }
+    printf("Ended connection\n");
 
     return 0;
 }

@@ -25,4 +25,10 @@ int checkStatusCode(int socketFd, int *validStatusCodes, int length, char* respo
 
 int readResponse(int socketFd, int *code, char* response);
 
+int requestServerFile(int socketFd, char *file);
+
+int transferServerFile(int socketFd, int socketFdTransfer, char *file);
+
+int endConnection(int socketFd);
+
 #endif

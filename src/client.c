@@ -77,6 +77,7 @@ int sendCommand(int socketFd, char *command, int hasArgs, char *args) {
         strcat(cmd, " ");
         strcat(cmd, args);
     }
+    // printf("%s\n", args);
 
     strcat(cmd, CRLF);
 
@@ -144,4 +145,59 @@ int checkStatusCode(int socketFd, int validStatusCodes[], int length, char* resp
     }
 
     return 0;
+}
+
+int requestServerFile(int socketFd, char *file) {
+	int statusCodes[1] = {};
+
+	if (sendCommand(socketFd, RETR, 1, file) < 0) {
+		fprintf(stderr, "Failed to send the RETR command.\n");
+		return -1;
+	}
+    printf("Sent the RETR command\n");
+	char response[4112] = {0};
+	statusCodes[0] = CMD_RETR_READY;
+	return checkStatusCode(socketFd, statusCodes, 1, response);
+}
+
+int transferServerFile(int socketFd, int socketFdTransfer, char *file) {
+    FILE *fileFd = fopen(file, "w");
+
+    if (fileFd == NULL) {
+        fprintf(stderr, "Failed to open the file.\n");
+        return -1;
+    }
+
+    char buffer[1024];
+    int bytesRead = 0;
+    int totalBytes = 0;
+
+    while ((bytesRead = read(socketFdTransfer, buffer, 1024)) > 0) {
+        fwrite(buffer, 1, bytesRead, fileFd);
+        totalBytes += bytesRead;
+        printf("\rBytes read: %d", totalBytes); // Use \r to move the cursor back to the start of the line
+        fflush(stdout); // Use fflush to immediately update the output
+    }
+    printf("\n");
+
+    fclose(fileFd);
+
+    int statusCodes[1] = {CMD_TRANSFER_COMPLETE};
+    char response[4112] = {0};
+    return checkStatusCode(socketFd, statusCodes, 1, response);
+}
+
+int endConnection(int fd) {
+    if (sendCommand(fd, QUIT, 0, NULL) < 0) {
+        fprintf(stderr, "Failed to send the QUIT command, closing fd either way.\n");
+        close(fd);
+        return -1;
+    }
+
+    int statusCodes[1] = {CMD_QUIT_OK};
+    char response[4112] = {0};
+    int correctStatus = checkStatusCode(fd, statusCodes, 1, response);
+
+    close(fd);
+    return correctStatus;
 }

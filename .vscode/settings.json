@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.embeddedhtml": "html",
-        "constants.h": "c"
+        "constants.h": "c",
+        "unistd.h": "c"
     }
 }

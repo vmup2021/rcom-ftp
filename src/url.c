@@ -3,7 +3,7 @@
 int parseUrl(char *url, struct url* u){
     char *_ = strtok(url, "/");
     char *userPassHost = strtok(NULL, "/");
-    char *path = strtok(NULL, "");
+    char *path = strtok(NULL, ""); // This line
 
     if(_ == NULL){
         fprintf(stderr, "Invalid URL, must specify the protocol.\n");
