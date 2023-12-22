@@ -54,3 +54,9 @@ FOTOS TIRADAS NESTE PONTO ANETS DE COMECAR O SLIDE 15
 FOTOS TIRADAS AS ROUTES
 
 O COISO UTILIZADO NO ROUTER FOI O 172.16.1.49/24 PARA LIGAR O Rc a internet
+
+
+## Conclusion 
+In this experiment we added the router "Rc" which is in our brigde11 and has access to the internet. After that we added static default routes on the other
+devices poiting to our "Rc" router. In the logs above we noticed that the ping packets from tux2 to tux3 that used to pass directly through tux4(which has an
+interface in the same network as tux3 and another in the same network as tux2) but now they passe through "Rc". We configured the NAT in our router running the command "/ip firewall nat enable 0" in the GTKterm sofware, which is a important to translate the private IP's in our network to a public IP on the internet. 
