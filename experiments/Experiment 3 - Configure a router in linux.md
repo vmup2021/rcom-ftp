@@ -36,3 +36,11 @@ route add -net 172.16.10.0/24 gw 172.16.11.253
 ```
 
 todo: captures
+
+## Conclusion 
+In this experience we used the commands ifconfig, route, sysclt. The first command was used to give to our added router an IP address in our network. The 
+route command was used to add routes to the other devices in our network, telling them where to forward certain packets. And the last command was used
+to configure our router so that it could properly work. The routes in each tux basically describe what to do with a packet that needs to be delivered 
+to a specific network, for that each entry has the destination field, the netmask field, the gateway, flags, and metric field that helps decide where
+to forward the packet. In the logs of this experience we could notice how the pings are performed into different networks seeing the IP addresses associated
+with the ICMP packets and the ARP requests that are used to discover the MAC of the hosts when the ping is executed.
