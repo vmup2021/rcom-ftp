@@ -26,3 +26,11 @@ With these commands we get IPs assigned to our computers and are able to ping ea
 
 // TODO do arp and pcapng
 
+# Conclusion
+In this experience we used the commands "ifconfig" and "arp". Where the first command is used to test the connectivity between 
+hosts, and for that it generates the ICMP(Internet Control Message Protocol) packets. The second command stands for "Address
+Resolution Protocol", which is a protocol used to map IP's to MAC's in a network. The packets we captured with Wireshark  
+showed source and destination IP addresses associated with the ping packets, and the arp packets generated to discover
+the MAC address of the destination, in case it wasn't in the arp table. We notice that the Ethernet frames have a field to indicate the type of payload in it(ARP, 
+IP, ICMP) and a field that indicates it's length.  
+
