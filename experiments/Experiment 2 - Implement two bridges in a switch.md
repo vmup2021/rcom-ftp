@@ -55,3 +55,8 @@ ping -b 172.16.10.255
 We also observed that we cannot ping computer 3 from computer 2 or computer 4 from 2 and vice-versa.
 
 // todo pacotes e perguntas
+
+## Conclusion
+Basically removed the computer ports that we would use from the default bridge and added them to our newly created ones "bridge10" and "bridge11", 
+for that we used the commands that can be seen above. With that we now have two broadcast domains, which we can conclude by that fact that by now 
+our network is composed by basically two bridges, or from the logs above, that is possible to view two broadcasts domains in the arp requests.
