@@ -50,11 +50,6 @@ gnu12:
 route add -net 172.16.10.0/24 gw 
 ```
 
-FOTOS TIRADAS NESTE PONTO ANETS DE COMECAR O SLIDE 15
-FOTOS TIRADAS AS ROUTES
-
-O COISO UTILIZADO NO ROUTER FOI O 172.16.1.49/24 PARA LIGAR O Rc a internet
-
 
 ## Conclusion 
 In this experiment we added the router "Rc" which is in our brigde11 and has access to the internet. After that we added static default routes on the other
